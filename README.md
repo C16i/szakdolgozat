@@ -1,0 +1,2 @@
+Szakdolgozat
+Mesterséges intelligencián alapuló szoftver implementációnak kidolgozása logisztikai rendszerek támogatásához.
