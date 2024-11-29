@@ -1,0 +1,20 @@
+# Byte-compiled Python files
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environments
+venv/
+django-env/
+
+# Log files
+*.log
+
+# Sensitive data
+.env
+config.json
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
