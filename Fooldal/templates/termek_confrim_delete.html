@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Termék törlése</title>
+</head>
+<body>
+    <h1>Biztosan törölni szeretnéd ezt a terméket?</h1>
+    <p>{{ termek.Nev }} - {{ termek.Kategoria }}</p>
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">Igen</button>
+        <a href="{% url 'termek-list' %}">Nem</a>
+    </form>
+</body>
+</html>

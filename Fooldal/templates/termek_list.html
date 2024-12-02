@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Termékek listája</title>
+</head>
+<body>
+    <h1>Termékek</h1>
+    <table>
+        <tr>
+            <th>Azon</th>
+            <th>Név</th>
+            <th>Kategória</th>
+            <th>Kiszerelés</th>
+            <th>Ár</th>
+            <th>Műveletek</th>
+        </tr>
+        {% for termek in termekek %}
+        <tr>
+            <td>{{ termek.Azon }}</td>
+            <td>{{ termek.Nev }}</td>
+            <td>{{ termek.Kategoria }}</td>
+            <td>{{ termek.Kiszereles }}</td>
+            <td>{{ termek.Ar }}</td>
+            <td>
+                <a href="{% url 'termek-update' termek.id %}">Módosítás</a> |
+                <a href="{% url 'termek-delete' termek.id %}">Törlés</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="{% url 'termek-create' %}">Új termék hozzáadása</a>
+</body>
+</html>
