@@ -1,0 +1,20 @@
+<!-- termek_confirm_delete.html -->
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Termék törlése</title>
+</head>
+<body>
+    <h1>Biztosan törölni szeretnéd ezt a terméket?</h1>
+    <p>Termék neve: {{ termek.Nev }}</p>
+    
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">Igen, törlöm</button>
+        <a href="{% url 'termek-list' %}">Mégse</a>
+    </form>
+</body>
+</html>
+

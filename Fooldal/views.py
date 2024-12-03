@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Termek
-from .forms import TermekFrom
+from .forms import TermekForm
+
 
 # Create your views here.
 
