@@ -1,12 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hu">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Főoldal</title>
 </head>
 <body>
-    <h1> Udv a fooldalon </h1>
-    
+    <h1>Üdv a főoldalon!</h1>
+
+    <!-- Bejelentkezés és regisztrációs gombok -->
+    <div>
+        <a href="{% url 'login' %}">
+            <button type="button">Bejelentkezés</button>
+        </a>
+        <a href="{% url 'register' %}">
+            <button type="button">Regisztráció</button>
+        </a>
+    </div>
 </body>
 </html>
