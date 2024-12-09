@@ -11,4 +11,5 @@ urlpatterns = [
     path('termek/delete/<int:pk>/', views.termek_delete, name='termek-delete'),
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     path('register/', views.register, name='register'),
+    path('accounts/profile/', views.profile, name='profile'),
 ]
