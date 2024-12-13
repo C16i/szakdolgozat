@@ -94,3 +94,5 @@ def remove_from_cart(request, item_id):
     item.delete()
     return redirect('view_cart')
 
+def order(request):
+    return render (request,'order.html')
