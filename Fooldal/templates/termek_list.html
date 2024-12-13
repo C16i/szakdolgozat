@@ -24,10 +24,14 @@
             <td>
                 <a href="{% url 'termek-update' termek.id %}">Módosítás</a> |
                 <a href="{% url 'termek-delete' termek.id %}">Törlés</a>
+                <a href="{% url 'add_to_cart' termek.id %}">Kosárba helyezés</a>
             </td>
         </tr>
         {% endfor %}
     </table>
     <a href="{% url 'termek-create' %}">Új termék hozzáadása</a>
+    <a href="{% url 'view_cart' %}">Kosár megtekintése</a>
+    
+
 </body>
 </html>

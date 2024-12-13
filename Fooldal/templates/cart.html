@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Kosár</h1>
+{% if cart.items.exists %}
+    <ul>
+        {% for item in cart.items.all %}
+            <li>{{ item.product.Nev }} - {{ item.quantity }} db</li>
+        {% endfor %}
+    </ul>
+    <p>Összesen: {{ cart.get_total_price }} Ft</p>
+{% else %}
+    <p>A kosár üres.</p>
+{% endif %}
+
+    
+</body>
+</html>
