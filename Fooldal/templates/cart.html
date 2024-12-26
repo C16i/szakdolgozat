@@ -1,27 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hu">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Kosár</title>
 </head>
 <body>
-    <h1>Kosár</h1>
-{% if cart.items.exists %}
-    <ul>
-        {% for item in cart.items.all %}
-            <li>{{ item.product.Nev }} - {{ item.quantity }} db</li>
-        {% endfor %}
-    </ul>
-    <p>Összesen: {{ cart.get_total_price }} Ft</p>
-{% else %}
-    <p>A kosár üres.</p>
-{% endif %}
+    <h1>Az Ön kosara</h1>
 
-<a href="{% url 'order' %}">
-    <button type="button"> Megrendeles</button>
-
-    </a>
-    
+    {% if items %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Termék</th>
+                    <th>Mennyiség</th>
+                    <th>Egységár</th>
+                    <th>Összesen</th>
+                    <th>Műveletek</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                    <tr>
+                        <td>{{ item.product.Nev }}</td>
+                        <td>
+                            <form method="POST" action="{% url 'update_quantity' item.id %}">
+                                {% csrf_token %}
+                                <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
+                                <button type="submit">Frissítés</button>
+                            </form>
+                        </td>
+                        <td>{{ item.product.Ar }} Ft</td>
+                        <td>{{ item.get_total_price }} Ft</td>
+                        <td>
+                            <a href="{% url 'remove_from_cart' item.id %}">Eltávolítás</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h3>Teljes összeg: {{ total_price }} Ft</h3>
+        <a href="{% url 'order' %}">Megrendelés véglegesítése</a>
+    {% else %}
+        <p>A kosár üres.</p>
+        <a href="{% url 'termek-list' %}">Vissza a termékekhez</a>
+    {% endif %}
 </body>
 </html>

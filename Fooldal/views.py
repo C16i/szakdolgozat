@@ -19,7 +19,7 @@ def termek_create(request):
         form = TermekForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('termek-list') #atiranyit a listazas oldalra
+            return redirect('termek-list') 
     else:
         form = TermekForm()
     return render(request,'termek_form.html',{'form':form})
@@ -67,27 +67,24 @@ def profile(request):
 @login_required
 def view_cart(request):
     cart, created = Cart.objects.get_or_create(user=request.user)
-    if created:
-        print("Új kosarat hoztunk létre.")
-    return render(request, 'cart.html', {'cart': cart})
-
+    items = cart.items.select_related('product')  
+    total_price = cart.get_total_price()  
+    
+    return render(request, 'cart.html', {
+        'cart': cart,
+        'items': items,
+        'total_price': total_price
+    })
 @login_required
 def add_to_cart(request, product_id):
-    # Lekérdezi a terméket az adatbázisból
     product = get_object_or_404(Termek, id=product_id)
-
-    # Lekérdezi vagy létrehozza a felhasználó kosarát
     cart, created = Cart.objects.get_or_create(user=request.user)
-
-    # Lekérdezi vagy létrehozza a kosártételt
     cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
-
-    # Ha már létezik a tétel, növeli a darabszámot
     if not created:
         cart_item.quantity += 1
     cart_item.save()
 
-    return redirect('termek-list')  # Visszairányít a termékek listájához
+    return redirect('termek-list')  
 
 def remove_from_cart(request, item_id):
     item = get_object_or_404(CartItem, id=item_id, cart__user=request.user)
@@ -96,3 +93,31 @@ def remove_from_cart(request, item_id):
 
 def order(request):
     return render (request,'order.html')
+
+@login_required
+def update_quantity(request, item_id):
+    item = get_object_or_404(CartItem, id=item_id, cart__user=request.user)
+    if request.method == "POST":
+        new_quantity = int(request.POST.get("quantity", 1))
+        if new_quantity > 0:
+            item.quantity = new_quantity
+            item.save()
+        else:
+            item.delete()  
+    return redirect('view_cart')
+
+@login_required
+def checkout(request):
+    cart = get_object_or_404(Cart, user=request.user)
+    if cart.items.exists():
+        order = Order.objects.create(user=request.user)
+        for item in cart.items.all():
+            OrderItem.objects.create(
+                order=order,
+                product=item.product,
+                quantity=item.quantity,
+            )
+        cart.items.all().delete()  
+        return redirect('order_success')
+    else:
+        return redirect('view_cart')
